@@ -55,11 +55,11 @@ This step consists of few actions:
               $ uvicorn main:app --reload
             - After running the command above, the terminal would be like below
         
-![Terminal](../../Pictures/Photos Library.photoslibrary/resources/derivatives/masters/5/5980B7EA-FCE6-45BA-A591-70E08E56A7ED_4_5005_c.jpeg)
+![Terminal](https://github.com/BurakCakan/Xccelerated-de-assignment-submission/blob/f89d1b5a35fc56f8b57f29afc052211e8e270c16/terminal.jpg)
 
             - On terminal, there is IP:Port information. Take this and add GET command as IP:Port/mertics/order
 
-![API Payload](../../Pictures/Photos Library.photoslibrary/originals/8/8314922C-D4CA-44F5-9CFA-0DA7D4946B28.jpeg)
+![API Payload](https://github.com/BurakCakan/Xccelerated-de-assignment-submission/blob/f89d1b5a35fc56f8b57f29afc052211e8e270c16/payload.jpg)
 
             - According to these results (0 and 0), whenever customers visit they give an order!
 
