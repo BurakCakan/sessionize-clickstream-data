@@ -7,7 +7,7 @@ def pg_auth():
     return engine
 
 
-def write_to_pg(dataframe, table_name):
+def write_to_pg(dataframe, table_name: str):
     dataframe.to_sql(table_name, pg_auth())
 
 
