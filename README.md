@@ -65,7 +65,7 @@ This step consists of few actions:
 
             - Besides that, Swagger UI can be used by writing IP:PORT/docs (27.0.0.1:8000/docs) to test the API
 
-![Swagger UI - GET Test](../../Pictures/Photos Library.photoslibrary/originals/D/DAD1AF97-DEF7-4438-AAFC-16DADAE23DCD.jpeg)
+![Swagger UI - GET Test](https://github.com/BurakCakan/Xccelerated-de-assignment-submission/blob/f89d1b5a35fc56f8b57f29afc052211e8e270c16/swagger.jpg)
 
 
 ## Step 3: Plan for the future
