@@ -4,7 +4,8 @@ import json as j
 from dateutil import parser
 
 
-def parse(url):
+def parse(url: str):
+    # used for get data from a web api and parsing a JSON object with multiple arrays
     r = requests.get(url, stream=True)
 
     raw_data = []
@@ -14,6 +15,7 @@ def parse(url):
 
 
 def to_dataframe(raw_list) -> pd.DataFrame:
+    # used for transforming list of dictionaries into pandas dataframe
     event_keys = set()
     for i in raw_list:
         if "event" in i.keys():
@@ -22,6 +24,7 @@ def to_dataframe(raw_list) -> pd.DataFrame:
     all_keys = event_keys.copy()
     all_keys.add("id")
     all_keys.add("type")
+    # all_keys store all possible column names come in derived data. It will be so important in building dataframe.
 
     _id = [e["id"] if "id" in e.keys() else None for e in raw_list]
     _type = [e["type"] if "type" in e.keys() else None for e in raw_list]
@@ -96,16 +99,20 @@ def to_dataframe(raw_list) -> pd.DataFrame:
         )
     )
     df.set_index("_id", inplace=True)
+    # data had a natural primary key columns as _id, I made this column as the index of data also
 
     return df
 
 
 def validation(raw_df):
+    # if customerId is null, records are eliminated here, and all records are sorted with timestamp
+
     raw_df.dropna(subset='customerId', inplace=True)
     raw_df.sort_values(by=['timestamp'], inplace=True)
 
 
 def calculate_sessionid(df):
+    # assumption is that 30-min is a session for a customer
     df['sessionId'] = df.groupby(['customerId', pd.Grouper(key='timestamp', freq='0.5H')], sort=False).ngroup()
 
     return df
