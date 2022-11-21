@@ -12,9 +12,8 @@ This step consists of few actions:
 
       b. Sessionize:
         - Sessionization is done in calculate_sessionid() function of dataPrep.py. Because it is an industry standard 
-          accorging to Google Analytics, 30 minutes of time interval is taken as session interval. 
+          accorging to Google Analytics, 30 minutes of time interval for unavailability between logs for a customerId is taken as session interval. 
           (https://support.google.com/analytics/answer/2731565?hl=en#zippy=%2Cin-this-article)
-        ????
 
       c. IO operations to PostgreSQL:
         - Writing and reading operations are executed on postgreConnector.py file. 
