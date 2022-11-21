@@ -98,8 +98,6 @@ def to_dataframe(raw_list) -> pd.DataFrame:
             ip=ip,
         )
     )
-    df.set_index("_id", inplace=True)
-    # data had a natural primary key columns as _id, I made this column as the index of data also
 
     return df
 
@@ -109,10 +107,30 @@ def validation(raw_df):
 
     raw_df.dropna(subset='customerId', inplace=True)
     raw_df.sort_values(by=['timestamp'], inplace=True)
+    raw_df.insert(0, 'rn', range(0, 0 + len(raw_df)))
+    raw_df.set_index("rn", inplace=True)
 
 
 def calculate_sessionid(df):
-    # assumption is that 30-min is a session for a customer
-    df['sessionId'] = df.groupby(['customerId', pd.Grouper(key='timestamp', freq='0.5H')], sort=False).ngroup()
+    # assumption is that 30-min of unavailability means another session could start
+    # That's why, I grouped events which have not more than 30 min between as a session for a customerId
 
-    return df
+    cs = []
+    cust_info = {}
+    last_session_all = 0
+    for i in range(len(df)):
+        if df['customerId'][i] not in cust_info.keys():
+            cust_info[df['customerId'][i]] = [df['timestamp'][i], last_session_all + 1]
+            last_session_all += 1
+            cs.append(last_session_all)
+        else:
+            td = df['timestamp'][i] - cust_info[df['customerId'][i]][0]
+            td_mins = int(round(td.total_seconds() / 60))
+            if td_mins > 30: 
+                cust_info[df['customerId'][i]] = [df['timestamp'][i], last_session_all + 1]
+                last_session_all += 1
+                cs.append(last_session_all)
+            else:
+                cust_info[df['customerId'][i]][0] = df['timestamp'][i]
+                cs.append(cust_info[df['customerId'][i]][1])
+    df['sessionId'] = cs
