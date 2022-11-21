@@ -8,9 +8,9 @@ raw_df = dataPrep.to_dataframe(raw_data)
 
 dataPrep.validation(raw_df)
 
-df = dataPrep.calculate_sessionid(raw_df)
+dataPrep.calculate_sessionid(raw_df)
 
-postgreConnector.write_to_pg(df, 'sessions')
+postgreConnector.write_to_pg(raw_df, 'sessions')
 
 results = postgreConnector.read_from_pg('results')
 
