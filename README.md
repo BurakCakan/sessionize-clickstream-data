@@ -6,11 +6,15 @@ Within that study, I will try to ingest a click or cookie data with Python and I
 
 I aimed to have an exercise study to handle clickstream session data. Steps of my project is given below:
 
--     Read data from object storage (GCS) in json with multiple arrays format by using Requests library. 
--     Make sessionization in Python 
--     Send data to PostgreSQL environment 
--     Calculate inter/between time metrics of sessions with using SQL window functions.
--     Publish results in a GET request of Python FastAPI 
+- Read data from object storage (GCS) in json with multiple arrays format by using Requests library. 
+- Make sessionization in Python 
+- Send data to PostgreSQL environment 
+- Calculate inter/between time metrics of sessions with using SQL window functions.
+- Publish results in a GET request of Python FastAPI 
+
+The overall architecture of this project is given below:
+
+![Architecture](architecture.jpg)
 
 ## About the Data 💾
 
@@ -22,7 +26,7 @@ The snippet of raw data is given below:
 {"id": 452437, "type": "page_view", "event": {"user-agent": "Mozilla/5.0 (iPod; U; CPU iPhone OS 4_3 like Mac OS X; br-FR) AppleWebKit/533.34.2 (KHTML, like Gecko) Version/4.0.5 Mobile/8B111 Safari/6533.34.2", "ip": "121.225.65.59", "customer-id": null, "timestamp": "2022-04-28T07:17:46.290271", "page": "https://xcc-webshop.com/cart"}}
 ```
  
--     dataPrep.py file has some functions which are used to get a JSON object with multiple arrays, transform it into a pandas Dataframe object, do manipulations on data. 
+dataPrep.py file has some functions which are used to get a JSON object with multiple arrays, transform it into a pandas Dataframe object, do manipulations on data. 
 
  **To satisfy data quality,** validation() function is used to eliminate records having null customerId value
 
@@ -39,9 +43,9 @@ The algoritm logic is given below:
 
 **IO operations:** 
 
--     Writing and reading operations are executed on postgreConnector.py file. 
--     Before running, postgresql latest version should be downloaded to the computer (docker, website etc.)
--     pg_auth() function should be updated according to the connection string of other users
+- Writing and reading operations are executed on postgreConnector.py file. 
+- Before running, postgresql latest version should be downloaded to the computer (docker, website etc.)
+- pg_auth() function should be updated according to the connection string of other users
 
 **Calculating metrics on PostgreSQL:** 🧮
         
