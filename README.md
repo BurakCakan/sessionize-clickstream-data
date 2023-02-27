@@ -9,10 +9,10 @@ I aimed to have an exercise study to handle clickstream session data. Steps of m
 -     Read data from object storage (GCS) in json with multiple arrays format by using Requests library. 
 -     Make sessionization in Python 
 -     Send data to PostgreSQL environment 
--     Canculate inter/between time metrics of sessions with using SQL window functions.
+-     Calculate inter/between time metrics of sessions with using SQL window functions.
 -     Publish results in a GET request of Python FastAPI 
 
-## About Session Data
+## About the Data 💾
 
 The data source is object storage and data os stored as json object with multiple arrays format.
 The snippet of raw data is given below:
@@ -26,24 +26,24 @@ The snippet of raw data is given below:
 
  **To satisfy data quality,** validation() function is used to eliminate records having null customerId value
 
-## Sessionization
+## Sessionization 💀
 
 Sessionization is done in calculate_sessionid() function of dataPrep.py. Because it is an industry standard accorging to [a Google Analytics article](https://support.google.com/analytics/answer/2731565?hl=en#zippy=%2Cin-this-article), 30 minutes of time interval for unavailability between logs for a customerId is taken as session interval. 
 
 The algoritm logic is given below:
 
-!foto ekle
+![Algorithm Logic](session_algorithm.jpg)
           
 
-## PostgreSQL Environment 
+## PostgreSQL Environment 🐘
 
-**IO operations:**
+**IO operations:** 
 
 -     Writing and reading operations are executed on postgreConnector.py file. 
 -     Before running, postgresql latest version should be downloaded to the computer (docker, website etc.)
 -     pg_auth() function should be updated according to the connection string of other users
 
-**Calculating metrics on PostgreSQL:**
+**Calculating metrics on PostgreSQL:** 🧮
         
 Aim is to calculate the metrics of median visit before order and median session duration minutes before order. 
 These metrics are calculated on postgresql (num_session_before_order.sql and time_until_order.sql)
@@ -66,8 +66,12 @@ time_until_order
     - To exclude sessions with placed order in calculations, I assigned 0 second as session time in query.
     - Logic is the same with num_session_before_order.
 
+Visual representation of these two calculations are given as:
 
-## Publish Metrics in API Request
+![SQL Calculation Logic](sql_calculation_logic.jpg)
+
+
+## Publish Metrics in API Request 🔥
 
 FastAPI is used for publishing results on API payload.
 
